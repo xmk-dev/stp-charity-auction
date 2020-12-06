@@ -1,4 +1,4 @@
-export const { MONGODB_URI, PORT, ADMIN_PASSWORD, ADMIN_USERNAME } = process.env;
+export const { MONGODB_URI, PORT = 8080, ADMIN_PASSWORD, ADMIN_USERNAME } = process.env;
 
 export const ADMINS = process.env.ADMINS?.split(';');
 
