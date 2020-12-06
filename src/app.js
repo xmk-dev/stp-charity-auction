@@ -22,6 +22,7 @@ app.use(cors(CORS));
 app.use(compression());
 app.use(bodyParser.json());
 app.use(API_PATH, router());
+app.set('port', PORT);
 
 connectDB();
 
