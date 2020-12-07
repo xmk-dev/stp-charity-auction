@@ -69,7 +69,7 @@ export const bid = async (request, response) => {
       { price: priceNumber, winnerEmail },
       { new: true, lean: true },
     );
-    emitData({ winnerEmail, price: priceNumber });
+    emitData({ winnerEmail, price: priceNumber, id: auctionId });
     const result = transformAuctionForResponse(updatedAuction);
     return response.status(200).send(result);
   }

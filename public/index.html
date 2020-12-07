@@ -288,8 +288,12 @@
     /* global io,window,alert,document,fetch */
     const apiEndpoint = '/api/v1';
     const auctionsEndpoint = '/auctions/';
-    const socket = io('/');
     const auctionId = new URLSearchParams(window.location.search).get('id');
+    const socket = io('https://stp-charity-auction.herokuapp.com/', {
+      query: {
+        id: auctionId,
+      },
+    });
     const state = {
       price: 0,
       winnerEmail: '',
@@ -368,7 +372,7 @@
     if (auctionId) {
       initialize();
 
-      socket.on('chat message', ({ price, winnerEmail }) => {
+      socket.on('data', ({ price, winnerEmail }) => {
         updateCurrentPrice(price);
         updateWinnerEmail(winnerEmail);
         updateInputValue(price);

@@ -1,11 +1,16 @@
 import { Server } from 'socket.io';
 
-let socket;
+let io;
 
-export const connectSocket = (server) => {
-  socket = new Server(server);
+export const createSocket = (server) => {
+  try {
+    io = new Server(server);
+    io.on('connection', (socket) => {
+      socket.join(socket.handshake.query.id);
+    });
+  } catch {
+    console.error('Socket.io error.');
+  }
 };
 
-export const emitData = (data) => {
-  socket?.emit('chat message', data);
-};
+export const emitData = ({ id, ...data }) => io?.to(id)?.emit('data', data);
