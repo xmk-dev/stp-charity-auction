@@ -289,7 +289,10 @@
     const apiEndpoint = '/api/v1';
     const auctionsEndpoint = '/auctions/';
     const auctionId = new URLSearchParams(window.location.search).get('id');
-    const socket = io('https://stp-charity-auction.herokuapp.com/', {
+    const socketUrl = window.location.href.includes('localhost')
+      ? window.location.href
+      : 'https://stp-charity-auction.herokuapp.com/';
+    const socket = io(socketUrl, {
       query: {
         id: auctionId,
       },

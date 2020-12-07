@@ -10,7 +10,7 @@ import favicon from 'serve-favicon';
 import { API_PATH, CORS, MORGAN_CONFIG, PORT, STATIC_CACHE_TIME } from './config.js';
 import connectDB from './database/connector.js';
 import router from './routes/router.js';
-import { connectSocket } from './utils/socket.js';
+import { createSocket } from './utils/socket.js';
 
 const app = express();
 
@@ -28,4 +28,4 @@ connectDB();
 
 const server = app.listen(PORT);
 
-connectSocket(server);
+createSocket(server);
