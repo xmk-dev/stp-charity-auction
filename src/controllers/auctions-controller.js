@@ -50,7 +50,7 @@ export const update = async (request, response) => {
 export const bid = async (request, response) => {
   const { price } = request.body || {};
   const { auctionId } = request.params || {};
-  const { email: winnerEmail } = request.user || {};
+  const { nameID: winnerEmail } = request.user || {};
 
   const priceNumber = Math.round(price);
   const { price: currentPrice } = await Auction.findById(auctionId);

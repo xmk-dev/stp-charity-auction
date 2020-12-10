@@ -1,17 +1,15 @@
+import { AUCTION_ADMIN_PATH, AUCTION_WITH_ID, AUCTIONS_BASE_PATH } from '../config.js';
 import { bid, findAll, findOne, update } from '../controllers/auctions-controller.js';
 import asyncErrorHandler from '../middlewares/async-error-handler.js';
-import { basicAuth, protect } from '../middlewares/auth.js';
-
-const BASE_PATH = '/auctions';
-const ID_PATH_PARAM = '/:auctionId';
-const ADMIN_PATH = '/admin';
+import basicAuth from '../middlewares/basic-auth.js';
+import { protect } from '../utils/passport.js';
 
 export default (router) => {
-  router.get(`${BASE_PATH}`, protect, asyncErrorHandler(findAll));
+  router.get(AUCTIONS_BASE_PATH, protect, asyncErrorHandler(findAll));
 
-  router.get(`${BASE_PATH}${ID_PATH_PARAM}`, protect, asyncErrorHandler(findOne));
+  router.get(AUCTION_WITH_ID, protect, asyncErrorHandler(findOne));
 
-  router.post(`${BASE_PATH}${ID_PATH_PARAM}`, protect, asyncErrorHandler(bid));
+  router.post(AUCTION_WITH_ID, protect, asyncErrorHandler(bid));
 
-  router.get(`${ADMIN_PATH}${BASE_PATH}${ID_PATH_PARAM}`, basicAuth, asyncErrorHandler(update));
+  router.get(AUCTION_ADMIN_PATH, basicAuth, asyncErrorHandler(update));
 };

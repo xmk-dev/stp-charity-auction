@@ -108,3 +108,4 @@ dist
 **/.DS_STORE
 saml-assertion.xml
 okta.cert
+env.sh
