@@ -26,14 +26,6 @@ export const findAll = async (request, response) => {
   return response.status(200).send(result);
 };
 
-export const create = async (request, response) => {
-  const newAuction = request.body;
-
-  const auction = await Auction.create(newAuction);
-
-  return response.status(200).send(auction);
-};
-
 export const update = async (request, response) => {
   const { active } = request.query || {};
   const updateData = {};
