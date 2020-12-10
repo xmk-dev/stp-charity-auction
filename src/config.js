@@ -23,7 +23,10 @@ export const APP_NAME = 'stp-charity-auction';
 
 export const CORS = {
   origin: '*',
-  methods: ['POST', 'GET'],
+  methods: ['POST', 'GET', 'PUT', 'DELETE', 'OPTIONS'],
+  credentials: true,
+  preflightContinue: true,
+  optionsSuccessStatus: 200,
 };
 
 export const API_PATH = '/api/v1/';

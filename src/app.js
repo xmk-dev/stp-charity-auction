@@ -3,7 +3,6 @@ import compression from 'compression';
 import cors from 'cors';
 import express from 'express';
 import session from 'express-session';
-import helmet from 'helmet';
 import morgan from 'morgan';
 import path from 'path';
 import favicon from 'serve-favicon';
@@ -24,6 +23,7 @@ import { protect } from './middlewares/auth.js';
 import router from './routes/router.js';
 import { createSocket } from './utils/socket.js';
 
+// TODO: add helmet for security
 const app = express();
 
 if (IS_PRODUCTION) {
@@ -32,7 +32,6 @@ if (IS_PRODUCTION) {
 
 app.set('port', PORT);
 app.use(morgan(MORGAN_CONFIG));
-app.use(helmet.contentSecurityPolicy({ reportOnly: true }));
 app.use(cors(CORS));
 app.use(compression());
 app.use(bodyParser.json());
@@ -47,9 +46,11 @@ app.use(
     name: APP_NAME,
   }),
 );
-app.use(express.static(path.join(path.resolve(), '/public'), { maxAge: STATIC_CACHE_TIME }));
+app.use(
+  protect,
+  express.static(path.join(path.resolve(), '/public'), { maxAge: STATIC_CACHE_TIME }),
+);
 app.use(favicon(path.join(path.resolve(), '/public', 'favicon.ico')));
-app.use('/', protect);
 
 connectDB();
 

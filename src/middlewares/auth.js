@@ -5,6 +5,7 @@ import {
   ADMIN_PASSWORD,
   ADMIN_USERNAME,
   ADMINS,
+  API_PATH,
   APP_URL,
   OKTA_CERT,
   OKTA_ISSUER,
@@ -15,7 +16,7 @@ const SAML_CONFIG = {
   cert: OKTA_CERT,
   issuer: OKTA_ISSUER,
   entryPoint: OKTA_SIGN_ON_URL,
-  path: `${APP_URL}/login/callback`,
+  path: `${APP_URL}${API_PATH}login/callback`,
 };
 
 const users = [];
@@ -37,10 +38,10 @@ passport.use(
 );
 
 export const protect = (request, response, next) =>
-  request.isAuthenticated() ? next() : response.redirect(`${APP_URL}/login`);
+  request.isAuthenticated() ? next() : response.redirect(`${APP_URL}${API_PATH}login`);
 
 export const authenticate = passport.authenticate('saml', {
-  failureRedirect: '/',
+  failureRedirect: APP_URL,
   failureFlash: true,
 });
 

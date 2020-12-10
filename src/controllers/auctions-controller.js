@@ -58,12 +58,12 @@ export const update = async (request, response) => {
 export const bid = async (request, response) => {
   const { price } = request.body || {};
   const { auctionId } = request.params || {};
+  const { email: winnerEmail } = request.user || {};
 
   const priceNumber = Math.round(price);
   const { price: currentPrice } = await Auction.findById(auctionId);
 
   if (auctionId && price && priceNumber && priceNumber > currentPrice) {
-    const winnerEmail = `email-${price}@example.com`; // TODO: get winner's email from Okta
     const updatedAuction = await Auction.findOneAndUpdate(
       { _id: auctionId },
       { price: priceNumber, winnerEmail },
