@@ -34,3 +34,12 @@ export const API_PATH = '/api/v1/';
 export const MORGAN_CONFIG = 'common';
 
 export const STATIC_CACHE_TIME = '4h';
+
+export const SAML_CONFIG = {
+  cert: OKTA_CERT,
+  issuer: OKTA_ISSUER,
+  entryPoint: OKTA_SIGN_ON_URL,
+  path: `${APP_URL}${API_PATH}login/callback`,
+  signatureAlgorithm: 'sha256',
+  digestAlgorithm: 'sha256',
+};

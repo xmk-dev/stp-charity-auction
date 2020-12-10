@@ -19,7 +19,7 @@ import {
   STATIC_CACHE_TIME,
 } from './config.js';
 import connectDB from './database/connector.js';
-import { protect } from './middlewares/auth.js';
+import { initializePassport, protect } from './middlewares/auth.js';
 import router from './routes/router.js';
 import { createSocket } from './utils/socket.js';
 
@@ -52,6 +52,7 @@ app.use(
 );
 app.use(favicon(path.join(path.resolve(), '/public', 'favicon.ico')));
 
+initializePassport(app);
 connectDB();
 
 const server = app.listen(PORT);

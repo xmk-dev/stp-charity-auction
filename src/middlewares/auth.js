@@ -7,17 +7,8 @@ import {
   ADMINS,
   API_PATH,
   APP_URL,
-  OKTA_CERT,
-  OKTA_ISSUER,
-  OKTA_SIGN_ON_URL,
+  SAML_CONFIG,
 } from '../config.js';
-
-const SAML_CONFIG = {
-  cert: OKTA_CERT,
-  issuer: OKTA_ISSUER,
-  entryPoint: OKTA_SIGN_ON_URL,
-  path: `${APP_URL}${API_PATH}login/callback`,
-};
 
 const users = [];
 
@@ -28,6 +19,7 @@ passport.serializeUser((user, done) => done(undefined, user.email));
 passport.deserializeUser((email, done) => done(undefined, findUserByEmail(email)));
 
 passport.use(
+  'saml',
   new Strategy(SAML_CONFIG, (user, done) => {
     if (!findUserByEmail(user.email)) {
       users.push(user);
@@ -41,7 +33,7 @@ export const protect = (request, response, next) =>
   request.isAuthenticated() ? next() : response.redirect(`${APP_URL}${API_PATH}login`);
 
 export const authenticate = passport.authenticate('saml', {
-  failureRedirect: APP_URL,
+  failureRedirect: `${APP_URL}/logout`,
   failureFlash: true,
 });
 
@@ -59,4 +51,9 @@ export const basicAuth = async (request, response, next) => {
   }
 
   return response.set('WWW-Authenticate', 'Basic').status(401).send();
+};
+
+export const initializePassport = (app) => {
+  app.use(passport.initialize());
+  app.use(passport.session());
 };

@@ -8,7 +8,7 @@ const LOGOUT_PATH = '/logout';
 const CALLBACK_PATH = `${LOGIN_PATH}/callback`;
 
 export default (router) => {
-  router.get(`${LOGIN_PATH}`, authenticate, asyncErrorHandler(redirect(APP_URL)));
+  router.get(`${LOGIN_PATH}`, authenticate);
 
   router.post(`${CALLBACK_PATH}`, authenticate, asyncErrorHandler(redirect(APP_URL)));
 
