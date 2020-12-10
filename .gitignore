@@ -106,3 +106,5 @@ dist
 # Others
 .DS_STORE
 **/.DS_STORE
+saml-assertion.xml
+okta.cert

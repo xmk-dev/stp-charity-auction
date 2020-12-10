@@ -9,7 +9,8 @@
     "clean": "rm -rf node_modules",
     "reinstall": "npm run clean && npm install",
     "rebuild": "npm run clean && npm install && npm run build",
-    "start": "node src/app.js",
+    "start": "NODE_ENV=production node src/app.js",
+    "start:dev": "NODE_ENV=development node src/app.js",
     "lint": "eslint './src/**/*.js'",
     "lint:fix": "eslint --fix './src/**/*.js'",
     "test": "jest --passWithNoTests -- -coverage "
@@ -55,9 +56,12 @@
     "compression": "^1.7.4",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "express-session": "^1.17.1",
     "helmet": "^4.2.0",
     "mongoose": "^5.11.4",
     "morgan": "^1.10.0",
+    "passport": "^0.4.1",
+    "passport-saml": "^2.0.2",
     "serve-favicon": "^2.5.0",
     "socket.io": "^3.0.3"
   }
