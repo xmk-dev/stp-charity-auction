@@ -11,5 +11,5 @@ export default (router) => {
 
   router.post(AUCTION_WITH_ID, protect, asyncErrorHandler(bid));
 
-  router.get(AUCTION_ADMIN_PATH, protect, emailAuth, asyncErrorHandler(update));
+  router.get(AUCTION_ADMIN_PATH, emailAuth, asyncErrorHandler(update));
 };
