@@ -53,9 +53,9 @@ export const bid = async (request, response) => {
   const { nameID: winnerEmail } = request.user || {};
 
   const priceNumber = Math.round(price);
-  const { price: currentPrice } = await Auction.findById(auctionId);
+  const { price: currentPrice, active } = await Auction.findById(auctionId);
 
-  if (auctionId && price && priceNumber && priceNumber > currentPrice) {
+  if (auctionId && price && priceNumber && priceNumber > currentPrice && active) {
     const updatedAuction = await Auction.findOneAndUpdate(
       { _id: auctionId },
       { price: priceNumber, winnerEmail },

@@ -372,7 +372,12 @@
 
     const initialize = async () => {
       const auctionDataResponse = await fetch(`${apiEndpoint}${auctionsEndpoint}${auctionId}`);
-      const { price, winnerEmail, currency, name, url } = await auctionDataResponse.json();
+      const { price, winnerEmail, currency, name, url, active } = await auctionDataResponse.json();
+
+      if (!active) {
+        alert('This auction is inactive. Try again later.');
+      }
+
       updateInputValue(price);
       updateCurrentPrice(price);
       updateCurrencySign(currency);
