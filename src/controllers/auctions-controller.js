@@ -26,27 +26,6 @@ export const findAll = async (request, response) => {
   return response.status(200).send(result);
 };
 
-export const update = async (request, response) => {
-  const { active } = request.query || {};
-  const updateData = {};
-
-  if (active) {
-    // eslint-disable-next-line eqeqeq
-    const activeBoolean = active == 'true';
-    updateData.active = activeBoolean;
-  }
-
-  const updatedAuction = await Auction.findOneAndUpdate(
-    { id: request.params.eventId },
-    updateData,
-    { new: true },
-  );
-
-  const result = transformAuctionForResponse(updatedAuction);
-
-  return response.status(200).send(result);
-};
-
 export const bid = async (request, response) => {
   const { price } = request.body || {};
   const { auctionId } = request.params || {};
