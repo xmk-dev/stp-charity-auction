@@ -39,7 +39,7 @@ export const AUCTION_ADMIN_PATH = `/admin${AUCTION_WITH_ID}`;
 export const LOGIN_PATH = '/login';
 export const LOGOUT_PATH = '/logout';
 export const CALLBACK_PATH = `${LOGIN_PATH}/callback`;
-export const PROTECT_REDIRECT_PATH = `${API_PATH}${LOGIN_PATH}`;
+export const PROTECT_REDIRECT_PATH = `${IS_PRODUCTION ? API_PATH.slice(1) : API_PATH}${LOGIN_PATH}`;
 
 export const SAML_CONFIG = {
   cert: OKTA_CERT,
