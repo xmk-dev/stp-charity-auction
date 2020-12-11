@@ -31,7 +31,9 @@
       background: none;
     }
 
-    button:hover {
+    button:hover,
+    a:hover,
+    #auctionName:hover {
       opacity: 0.7;
     }
 
@@ -49,8 +51,24 @@
       margin: 0;
     }
 
-    #nav {
-      padding: 10px;
+    #header {
+      border-bottom: rgb(37,37,35) solid 0.25px;
+      margin: 15px;
+    }
+
+    #footer {
+      position: fixed;
+      bottom: 0;
+      padding: 15px;
+    }
+
+    #auctionName {
+      font-size: 50px;
+      font-weight: 400;
+      color: rgb(37,37,35);
+      text-align: center;
+      margin: 10px;
+      text-transform: uppercase;
     }
 
     #form {
@@ -60,7 +78,7 @@
       margin: auto;
       left: 0;
       right: 0;
-      top: 0;
+      top: 100px;
       bottom: 0;
 
       background: #ffffff;
@@ -111,6 +129,11 @@
       color: #ffffff;
     }
 
+    #auctionUrl {
+      text-decoration: none;
+      margin: auto;
+    }
+
     #currentResult {
       left: 0;
       right: 0;
@@ -141,7 +164,7 @@
       position: relative;
       width: 200px;
       height: 50px;
-      bottom: -150px;
+      bottom: -125px;
 
       background: #3498db;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
@@ -209,6 +232,10 @@
         font-size: 14px;
       }
 
+      #auctionName {
+        font-size: 35px;
+      }
+
       #currentWinner {
         font-size: 12px;
       }
@@ -234,10 +261,8 @@
 
   <body>
     <nav id="nav">
-      <header>
-        <img
-          src="//schibsted.pl/wp-content/themes/schibsted-wp-theme/assets/img/Schibsted-logo-medium.svg"
-        />
+      <header id="header">
+        <a id="auctionUrl" target="__blank" href="#"><h3 id="auctionName"></h3></a>
       </header>
     </nav>
 
@@ -270,11 +295,17 @@
         <p id="currentPriceAndCurrency">
           <span id="currentPrice">0</span> <span id="currencySignCurrentPrice">PLN</span>
         </p>
-        <p id="currentWinner">🎉<span id="winnerEmail">email@example.com</span></p>
+        <p id="currentWinner">🎉 <span id="winnerEmail">email@example.com</span></p>
       </div>
 
       <button id="bidButton" type="submit">💸</button>
     </form>
+
+    <footer id="footer">
+      <img
+        src="//schibsted.pl/wp-content/themes/schibsted-wp-theme/assets/img/Schibsted-logo-medium.svg"
+      />
+    </footer>
   </body>
 
   <script
@@ -321,6 +352,14 @@
       document.querySelector('#currencySignPriceInput').textContent = value;
     };
 
+    const updateName = (value) => {
+      document.querySelector('#auctionName').textContent = value;
+    };
+
+    const updateUrl = (value) => {
+      document.querySelector('#auctionUrl').href = value;
+    };
+
     const incrementPriceValue = (event) => {
       event.preventDefault();
       priceInput.value = Number(priceInput.value) + 1;
@@ -333,11 +372,13 @@
 
     const initialize = async () => {
       const auctionDataResponse = await fetch(`${apiEndpoint}${auctionsEndpoint}${auctionId}`);
-      const { price, winnerEmail, currency } = await auctionDataResponse.json();
+      const { price, winnerEmail, currency, name, url } = await auctionDataResponse.json();
       updateInputValue(price);
       updateCurrentPrice(price);
       updateCurrencySign(currency);
       updateWinnerEmail(winnerEmail);
+      updateName(name);
+      updateUrl(url);
       state.price = price;
       state.winnerEmail = winnerEmail;
       state.currency = currency;
