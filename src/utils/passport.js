@@ -3,9 +3,9 @@ import { Strategy } from 'passport-saml';
 
 import { APP_URL, PROTECT_REDIRECT_PATH, SAML_CONFIG } from '../config.js';
 
-const userIds = [];
+const users = [];
 
-const findUserById = (id) => userIds.find((userId) => userId === id);
+const findUserById = (id) => users.find(({ nameID }) => nameID === id);
 
 passport.serializeUser(({ nameID }, done) => done(undefined, nameID));
 
@@ -15,7 +15,7 @@ passport.use(
   'saml',
   new Strategy(SAML_CONFIG, (user, done) => {
     if (!findUserById(user.nameID)) {
-      userIds.push(user.nameID);
+      users.push(user);
     }
 
     return done(undefined, user);
