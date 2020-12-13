@@ -23,7 +23,8 @@ export const bid = async (request, response) => {
   const { price: userPrice } = request.body || {};
   const { auctionId } = request.params || {};
   const { nameID: winnerEmail } = request.user || {};
-  console.log('\n\n', request.user, '\n\n');
+
+  console.log('\n\nPASSPORT USER:', request.passport?.user, '\n\n');
 
   const price = Math.round(userPrice);
   const { price: currentPrice, active } = await Auction.findById(auctionId);

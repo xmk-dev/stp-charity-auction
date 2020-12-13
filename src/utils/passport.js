@@ -15,6 +15,7 @@ passport.use(
   'saml',
   new Strategy(SAML_CONFIG, (user, done) => {
     if (!findUserById(user.nameID)) {
+      console.log('\n\nUSER:', user, '\n\n');
       users.push(user);
     }
 
