@@ -7,6 +7,7 @@ export const {
   OKTA_ISSUER,
   OKTA_SIGN_ON_URL,
   OKTA_CERT,
+  MONGODB_SESSIONS_URI,
 } = process.env;
 
 export const ADMINS = process.env.ADMINS?.split(';');
@@ -31,9 +32,7 @@ export const APP_URL = IS_PRODUCTION
   ? 'https://stp-charity-auction.herokuapp.com'
   : `http://localhost:${PORT}`;
 export const API_PATH = '/api/v1';
-export const AUCTIONS_BASE_PATH = '/auctions';
-export const AUCTION_WITH_ID = `${AUCTIONS_BASE_PATH}/:auctionId`;
-export const AUCTION_ADMIN_PATH = `/admin${AUCTION_WITH_ID}`;
+export const AUCTION_WITH_ID = `/auctions/:auctionId`;
 export const LOGIN_PATH = '/login';
 export const LOGOUT_PATH = '/logout';
 export const CALLBACK_PATH = `${LOGIN_PATH}/callback`;

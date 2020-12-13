@@ -19,30 +19,22 @@ export const findOne = async (request, response) => {
   return response.status(200).send(result);
 };
 
-export const findAll = async (request, response) => {
-  const items = await Auction.find().lean();
-  const result = items.map(transformAuctionForResponse);
-
-  return response.status(200).send(result);
-};
-
 export const bid = async (request, response) => {
-  const { price } = request.body || {};
+  const { price: userPrice } = request.body || {};
   const { auctionId } = request.params || {};
   const { nameID: winnerEmail } = request.user || {};
 
-  const priceNumber = Math.round(price);
+  const price = Math.round(userPrice);
   const { price: currentPrice, active } = await Auction.findById(auctionId);
 
-  if (auctionId && price && priceNumber && priceNumber > currentPrice && active) {
-    const updatedAuction = await Auction.findOneAndUpdate(
+  if (auctionId && price > currentPrice && active) {
+    await Auction.findOneAndUpdate(
       { _id: auctionId },
-      { price: priceNumber, winnerEmail },
+      { price, winnerEmail },
       { new: true, lean: true },
     );
-    emitData({ winnerEmail, price: priceNumber, id: auctionId });
-    const result = transformAuctionForResponse(updatedAuction);
-    return response.status(200).send(result);
+    emitData({ winnerEmail, price, id: auctionId });
+    return response.status(200).send();
   }
 
   return response.status(400).send();
