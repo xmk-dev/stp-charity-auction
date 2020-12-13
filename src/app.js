@@ -6,6 +6,7 @@ import cors from 'cors';
 import express from 'express';
 import session from 'express-session';
 import helmet from 'helmet';
+import mongoose from 'mongoose';
 import morgan from 'morgan';
 import path from 'path';
 import favicon from 'serve-favicon';
@@ -15,7 +16,6 @@ import {
   COOKIE_MAX_AGE_MS,
   CORS,
   IS_PRODUCTION,
-  MONGODB_SESSIONS_URI,
   MORGAN_CONFIG,
   PORT,
   SESSION_SECRET,
@@ -25,6 +25,8 @@ import connectDB from './database/connector.js';
 import router from './routes/router.js';
 import passport, { protect } from './utils/passport.js';
 import { createSocket } from './utils/socket.js';
+
+connectDB();
 
 const MongoStore = connectMongo(session);
 const app = express();
@@ -44,7 +46,7 @@ app.use(
     resave: IS_PRODUCTION,
     saveUninitialized: IS_PRODUCTION,
     store: new MongoStore({
-      url: MONGODB_SESSIONS_URI,
+      mongooseConnection: mongoose.connection,
       collection: 'sessions',
     }),
   }),
@@ -64,8 +66,6 @@ app.use(
 );
 app.use(cors(CORS));
 app.use(API_PATH, router());
-
-connectDB();
 
 // Front-End
 app.get('/', protect);
