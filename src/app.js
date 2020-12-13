@@ -1,6 +1,6 @@
 import bodyParser from 'body-parser';
 import compression from 'compression';
-// import MongoStore from 'connect-mongo';
+import MongoStore from 'connect-mongo';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
@@ -15,7 +15,7 @@ import {
   COOKIE_MAX_AGE_MS,
   CORS,
   IS_PRODUCTION,
-  // MONGODB_SESSIONS_URI,
+  MONGODB_SESSIONS_URI,
   MORGAN_CONFIG,
   PORT,
   SESSION_SECRET,
@@ -42,7 +42,7 @@ app.use(
     cookie: { maxAge: COOKIE_MAX_AGE_MS, secure: IS_PRODUCTION },
     resave: IS_PRODUCTION,
     saveUninitialized: IS_PRODUCTION,
-    // store: new MongoStore({ url: MONGODB_SESSIONS_URI }),
+    store: new MongoStore({ url: MONGODB_SESSIONS_URI }),
   }),
 );
 app.use(passport.initialize());
