@@ -43,7 +43,10 @@ app.use(
     cookie: { maxAge: COOKIE_MAX_AGE_MS, secure: IS_PRODUCTION },
     resave: IS_PRODUCTION,
     saveUninitialized: IS_PRODUCTION,
-    store: new MongoStore({ url: MONGODB_SESSIONS_URI }),
+    store: new MongoStore({
+      url: MONGODB_SESSIONS_URI,
+      collection: 'sessions',
+    }),
   }),
 );
 app.use(passport.initialize());
