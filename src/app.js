@@ -1,6 +1,6 @@
 import bodyParser from 'body-parser';
 import compression from 'compression';
-import MongoStore from 'connect-mongo';
+import connectMongo from 'connect-mongo';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
@@ -26,6 +26,7 @@ import router from './routes/router.js';
 import passport, { protect } from './utils/passport.js';
 import { createSocket } from './utils/socket.js';
 
+const MongoStore = connectMongo(session);
 const app = express();
 
 if (IS_PRODUCTION) {
