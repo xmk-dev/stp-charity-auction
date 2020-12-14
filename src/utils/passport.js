@@ -2,19 +2,24 @@ import passport from 'passport';
 import { Strategy } from 'passport-saml';
 
 import { APP_URL, PROTECT_REDIRECT_PATH, SAML_CONFIG } from '../config.js';
-// import User from '../database/models/user.js';
+import User from '../database/models/user.js';
 
-// const users = [];
+passport.serializeUser(({ nameID, _id }, done) => done(undefined, nameID || _id));
 
-// const findUserById = (id) => users.find(({ nameID }) => nameID === id);
+passport.deserializeUser((id, done) => User.findById(id, done));
 
-// passport.serializeUser(({ nameID }, done) => done(undefined, nameID));
+passport.use(
+  'saml',
+  new Strategy(SAML_CONFIG, async ({ nameID }, done) => {
+    let user;
+    if (!(await User.findById(nameID))) {
+      user = await User.create({ _id: nameID });
+    }
 
-// passport.deserializeUser((nameID, done) => done(undefined, findUserById(nameID)));
-
-// User.findOneAndUpdate({ _id: nameID }, { upsert: true }, done)
-
-passport.use('saml', new Strategy(SAML_CONFIG, ({ nameID }, done) => done(undefined, { nameID })));
+    console.log('\n\nUSER:\n', user, '\n\n');
+    return done(undefined, user);
+  }),
+);
 
 export const protect = (request, response, next) =>
   request.isAuthenticated() ? next() : response.redirect(PROTECT_REDIRECT_PATH);

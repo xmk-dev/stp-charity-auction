@@ -22,7 +22,8 @@ export const findOne = async (request, response) => {
 export const bid = async (request, response) => {
   const { price: userPrice } = request.body || {};
   const { auctionId } = request.params || {};
-  const { nameID: winnerEmail } = request.user || {};
+  const { nameID: winnerEmail, _id } = request.user || {};
+  console.log('\n\n\nCONTROLLER:\n', { nameID, _id }, '\n\n');
 
   const price = Math.round(userPrice);
   const { price: currentPrice, active } = await Auction.findById(auctionId);
@@ -30,7 +31,7 @@ export const bid = async (request, response) => {
   if (auctionId && price > currentPrice && active) {
     await Auction.findOneAndUpdate(
       { _id: auctionId },
-      { price, winnerEmail },
+      { price, winnerEmail: winnerEmail || _id },
       { new: true, lean: true },
     );
     emitData({ winnerEmail, price, id: auctionId });
