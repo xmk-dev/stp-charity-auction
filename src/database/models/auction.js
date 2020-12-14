@@ -8,8 +8,6 @@ const AuctionSchema = new mongoose.Schema(
     currency: { type: String, default: 'PLN' },
     url: { type: String, default: '#' },
     winnerEmail: { type: String },
-    description: { type: String },
-    avatarUrl: { type: String },
   },
   {
     timestamps: true,
