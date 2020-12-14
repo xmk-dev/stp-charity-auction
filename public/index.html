@@ -52,7 +52,7 @@
     }
 
     #header {
-      border-bottom: rgb(37,37,35) solid 0.25px;
+      border-bottom: rgb(37, 37, 35) solid 0.25px;
       margin: 15px;
     }
 
@@ -65,7 +65,7 @@
     #auctionName {
       font-size: 50px;
       font-weight: 400;
-      color: rgb(37,37,35);
+      color: rgb(37, 37, 35);
       text-align: center;
       margin: 10px;
       text-transform: uppercase;
@@ -175,6 +175,10 @@
 
       left: 50%;
       transform: translateX(-50%);
+    }
+
+    .disabled{
+      background: #95a5a6;
     }
 
     .chevron::before {
@@ -301,7 +305,7 @@
         <p id="currentWinner">🎉 <span id="winnerEmail">email@example.com</span></p>
       </div>
 
-      <button id="bidButton" type="submit">💸</button>
+      <button id="bidButton" type="submit">SUBMIT 💸</button>
     </form>
 
     <footer id="footer">
@@ -322,6 +326,8 @@
     /* global io,window,alert,document,fetch */
     const apiEndpoint = '/api/v1';
     const auctionsEndpoint = '/auctions/';
+    const defaultCurrency = 'PLN';
+    const defaultPrice = 0;
     const auctionId = new URLSearchParams(window.location.search).get('id');
     const socketUrl = window.location.href.includes('localhost')
       ? window.location.href
@@ -332,9 +338,9 @@
       },
     });
     const state = {
-      price: 0,
+      price: defaultPrice,
       winnerEmail: '',
-      currency: 'PLN',
+      currency: defaultCurrency,
     };
     const priceInput = document.querySelector('#priceInput');
 
@@ -375,10 +381,20 @@
 
     const initialize = async () => {
       const auctionDataResponse = await fetch(`${apiEndpoint}${auctionsEndpoint}${auctionId}`);
-      const { price, winnerEmail, currency, name, url, active } = await auctionDataResponse.json();
+      const {
+        price = defaultPrice,
+        winnerEmail,
+        currency = defaultCurrency,
+        name,
+        url,
+        active,
+      } = await auctionDataResponse.json();
 
       if (!active) {
         alert('This auction is inactive. Try again later.');
+        const bidButton = document.querySelector('#bidButton');
+        bidButton.disabled = true;
+        bidButton.classList.add('disabled');
       }
 
       updateInputValue(price);

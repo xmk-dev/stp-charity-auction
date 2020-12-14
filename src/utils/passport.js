@@ -11,13 +11,13 @@ passport.deserializeUser((id, done) => User.findById(id, done));
 passport.use(
   'saml',
   new Strategy(SAML_CONFIG, async ({ nameID }, done) => {
-    let user;
-    if (!(await User.findById(nameID))) {
-      user = await User.create({ _id: nameID });
+    const user = await User.findById(nameID);
+
+    if (user) {
+      return done(undefined, user);
     }
 
-    console.log('\n\nUSER:\n', user, '\n\n');
-    return done(undefined, user);
+    return User.create({ _id: nameID }, done);
   }),
 );
 
