@@ -31,7 +31,7 @@ export const bid = async (request, response) => {
   if (auctionId && price > currentPrice && active) {
     await Auction.findOneAndUpdate(
       { _id: auctionId },
-      { price, winnerEmail: winnerEmail || _id },
+      { price, winnerEmail },
       { new: true, lean: true },
     );
     emitData({ winnerEmail, price, id: auctionId });
