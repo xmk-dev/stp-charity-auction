@@ -24,6 +24,11 @@ export const CORS = {
   optionsSuccessStatus: 200,
 };
 
+export const HELMET_DIRECTIVES = {
+  'script-src': ["'self'", "'unsafe-inline'", 'unpkg.com', 'cdnjs.cloudflare.com'],
+  'img-src': ["'self'", 'schibsted.pl'],
+};
+
 export const MORGAN_CONFIG = 'common';
 
 export const STATIC_CACHE_TIME = '4h';

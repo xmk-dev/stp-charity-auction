@@ -15,6 +15,7 @@ import {
   API_PATH,
   COOKIE_MAX_AGE_MS,
   CORS,
+  HELMET_DIRECTIVES,
   IS_PRODUCTION,
   MORGAN_CONFIG,
   PORT,
@@ -59,8 +60,7 @@ app.use(
   helmet.contentSecurityPolicy({
     directives: {
       ...helmet.contentSecurityPolicy.getDefaultDirectives(),
-      'script-src': ["'self'", "'unsafe-inline'", 'unpkg.com', 'cdnjs.cloudflare.com'],
-      'img-src': ["'self'", 'schibsted.pl'],
+      ...HELMET_DIRECTIVES,
     },
   }),
 );

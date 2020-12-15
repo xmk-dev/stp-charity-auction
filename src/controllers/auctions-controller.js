@@ -22,10 +22,9 @@ export const findOne = async (request, response) => {
 export const bid = async (request, response) => {
   const { price: userPrice } = request.body || {};
   const { auctionId } = request.params || {};
-  console.log('\n\nREQUEST USER:\n', request.user, '\n\n');
-  const { nameID: winnerEmail, _id } = request.user || {};
-  console.log('\n\n\nCONTROLLER:\n', { nameID, _id }, '\n\n');
+  const { _id: winnerEmail } = request.user || {};
 
+  console.log('\n\nCONTROLLER DEBUG:\n', { userPrice, auctionId, winnerEmail }, '\n\n');
   const price = Math.round(userPrice);
   const { price: currentPrice, active } = await Auction.findById(auctionId);
 
