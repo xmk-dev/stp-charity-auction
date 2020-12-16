@@ -417,7 +417,7 @@
 
       if (!active) {
         disableBidButton();
-        alert('This auction is inactive. Try again later.');
+        setTimeout(() => alert('This auction is inactive. Try again later.'));
       }
     };
 
@@ -430,7 +430,7 @@
         });
       } catch (error) {
         console.error(error);
-        alert('Incorrect price sent. Try again.');
+        setTimeout(() => alert('Incorrect price sent. Try again.'));
       }
     };
 
@@ -478,7 +478,7 @@
       document.querySelector('#form').addEventListener('submit', submit);
     } else {
       disableBidButton();
-      alert('Cannot find auction. Try again later.');
+      setTimeout(() => alert('Cannot find auction. Try again later.'));
     }
   </script>
 </html>
