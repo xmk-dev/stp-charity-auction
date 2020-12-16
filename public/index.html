@@ -37,6 +37,18 @@
       opacity: 0.7;
     }
 
+    button:disabled,
+    button[disabled] {
+      cursor: default;
+      filter: grayscale(100%);
+    }
+
+    button:disabled:hover,
+    button[disabled]:hover {
+      opacity: 1;
+      cursor: default;
+    }
+
     p {
       margin: 0;
       padding: 0;
@@ -177,10 +189,6 @@
       left: 50%;
       color: white;
       transform: translateX(-50%);
-    }
-
-    .disabled{
-      background: #95a5a6;
     }
 
     .chevron::before {
@@ -381,6 +389,11 @@
       priceInput.value = Number(priceInput.value) - 1;
     };
 
+    const disableBidButton = () => {
+      const bidButton = document.querySelector('#bidButton');
+      bidButton.disabled = true;
+    };
+
     const initialize = async () => {
       const auctionDataResponse = await fetch(`${apiEndpoint}${auctionsEndpoint}${auctionId}`);
       const {
@@ -392,13 +405,6 @@
         active,
       } = await auctionDataResponse.json();
 
-      if (!active) {
-        alert('This auction is inactive. Try again later.');
-        const bidButton = document.querySelector('#bidButton');
-        bidButton.disabled = true;
-        bidButton.classList.add('disabled');
-      }
-
       updateInputValue(price);
       updateCurrentPrice(price);
       updateCurrencySign(currency);
@@ -408,6 +414,11 @@
       state.price = price;
       state.winnerEmail = winnerEmail;
       state.currency = currency;
+
+      if (!active) {
+        alert('This auction is inactive. Try again later.');
+        disableBidButton();
+      }
     };
 
     const bid = async (price) => {
@@ -467,6 +478,7 @@
       document.querySelector('#form').addEventListener('submit', submit);
     } else {
       alert('Cannot find auction. Try again later.');
+      disableBidButton();
     }
   </script>
 </html>

@@ -18,7 +18,7 @@ export const APP_NAME = 'stp-charity-auction';
 
 export const CORS = {
   origin: '*',
-  methods: ['POST', 'GET', 'PUT', 'DELETE', 'OPTIONS'],
+  methods: ['POST', 'GET'],
   credentials: true,
   preflightContinue: true,
   optionsSuccessStatus: 200,
@@ -39,7 +39,6 @@ export const APP_URL = IS_PRODUCTION
 export const API_PATH = '/api/v1';
 export const AUCTION_WITH_ID = `/auctions/:auctionId`;
 export const LOGIN_PATH = '/login';
-export const LOGOUT_PATH = '/logout';
 export const CALLBACK_PATH = `${LOGIN_PATH}/callback`;
 export const PROTECT_REDIRECT_PATH = `${IS_PRODUCTION ? API_PATH.slice(1) : API_PATH}${LOGIN_PATH}`;
 
