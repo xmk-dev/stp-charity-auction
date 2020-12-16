@@ -416,8 +416,8 @@
       state.currency = currency;
 
       if (!active) {
-        alert('This auction is inactive. Try again later.');
         disableBidButton();
+        alert('This auction is inactive. Try again later.');
       }
     };
 
@@ -477,8 +477,8 @@
       document.querySelector('#decrementPriceValue').addEventListener('click', decrementPriceValue);
       document.querySelector('#form').addEventListener('submit', submit);
     } else {
-      alert('Cannot find auction. Try again later.');
       disableBidButton();
+      alert('Cannot find auction. Try again later.');
     }
   </script>
 </html>
