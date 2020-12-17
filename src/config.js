@@ -2,7 +2,7 @@ export const {
   MONGODB_URI,
   SESSION_SECRET,
   PORT = 8080,
-  COOKIE_MAX_AGE_MS = 4 * 60 * 60 * 1000,
+  COOKIE_MAX_AGE_MS = 24 * 60 * 60 * 1000,
   NODE_ENV: ENV,
   OKTA_ISSUER,
   OKTA_SIGN_ON_URL,
@@ -31,7 +31,7 @@ export const HELMET_DIRECTIVES = {
 
 export const MORGAN_CONFIG = 'common';
 
-export const STATIC_CACHE_TIME = '4h';
+export const STATIC_CACHE_TIME = '24h';
 
 export const APP_URL = IS_PRODUCTION
   ? 'https://stp-charity-auction.herokuapp.com'
